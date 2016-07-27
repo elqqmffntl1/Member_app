@@ -5,28 +5,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="ID : "
+        android:id="@+id/et_id"/>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="password : "
+        android:id="@+id/et_pw"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/bt_login"
         android:text="로그인"
         android:textSize="50dp"
         android:background="#454242"
         android:textColor="#ffffff"
         />
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="265dp"
-        />
+        android:text="계정이 없다면 생성먼저 해주세요"
+        android:textSize="20dp"
+        android:layout_marginTop="180dp"
+        android:gravity="center"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="회원가입"
         android:textSize="50dp"
+        android:id="@+id/bt_join"
         android:background="#454242"
         android:textColor="#ffffff"/>
 </LinearLayout>
