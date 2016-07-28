@@ -5,9 +5,18 @@ package com.abc.app.memberapp;
  */
 public class MemberBean {
     private String id,pw,name,ssn,email,phone;
+    private  int photo;
 
     public String getPhone() {
         return phone;
+    }
+
+    public int getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(int photo) {
+        this.photo = photo;
     }
 
     public void setPhone(String phone) {

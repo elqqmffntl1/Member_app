@@ -1,21 +1,19 @@
 package com.abc.app.memberapp;
 
+import android.content.Context;
+
 import java.util.List;
 
 /**
  * Created by hb2002 on 2016-07-27.
  */
 public class MemberServiceImpl implements MemberService{
-    private MemberDAO dao = MemberDAO.getInstance();
-    private MemberBean session;
-    private static MemberServiceImpl instance = new MemberServiceImpl();  //싱글턴 패턴(보안때문에 getter만 보유한패턴)
+    MemberDAO dao;
+    MemberBean session;
+    public MemberServiceImpl(Context context) {
+        dao = new MemberDAO(context);
+    }
 
-    public static MemberServiceImpl getInstance() {
-        return instance;
-    }
-    private MemberServiceImpl() {
-        session = new MemberBean();
-    }
     @Override
     public String regist(MemberBean mem) {
         String msg = "";
