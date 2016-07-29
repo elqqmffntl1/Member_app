@@ -1,20 +1,21 @@
 package com.abc.app.memberapp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by hb2002 on 2016-07-27.
+ * Created by hb2003 on 2016-07-27.
  */
 public interface MemberService {
-    public String regist(MemberBean mem);
-    public String show();
-    public void update(MemberBean stu2);
-    public String delete(MemberBean member);
-    public MemberBean findById(String findID);
+    public void regist(MemberBean mBean);
+    public int update(MemberBean mBean);
+    public int delete(MemberBean mBean);
+    public MemberBean findById(String id);
+    public boolean login(MemberBean mBean);
+    public void logOut(MemberBean mBean);
     public MemberBean getSession();
-    public void logout(MemberBean member);
     public int count();
-    public List<?> list();
-    public List<?> findBy(String keyword);
+    public ArrayList<MemberBean> list();
+    public List<MemberBean> findBy(String word);
 
 }

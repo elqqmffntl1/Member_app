@@ -2,88 +2,101 @@ package com.abc.app.memberapp;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * Created by hb2002 on 2016-07-27.
+ * Created by hb2003 on 2016-07-27.
  */
 public class MemberServiceImpl implements MemberService{
+    private Map<String,MemberBean> map;
     MemberDAO dao;
     MemberBean session;
+
     public MemberServiceImpl(Context context) {
         dao = new MemberDAO(context);
     }
 
     @Override
-    public String regist(MemberBean mem) {
-        String msg = "";
-        MemberBean temp = this.findById(mem.getId());
-        if (temp == null) {
-            System.out.println(mem.getId()+"은(는) 사용 가능한 ID 입니다.");
-            int result = dao.insert(mem);
-            if (result==1) {
-                msg = "success";
-            } else {
-                msg = "fail";
-            }
+    public boolean login(MemberBean mBean) {
+        return dao.login(mBean);
+    }
+
+    private static MemberServiceImpl instance = new MemberServiceImpl();
+
+    private MemberServiceImpl() {
+
+    }
+    public static MemberServiceImpl getInstance() {
+        return instance;
+    }
+
+    @Override
+    public void regist(MemberBean mem) {
+        dao.insert(mem);
+    }
+
+    @Override
+    public int update(MemberBean mBean) {
+        int result= dao.updatePw(mBean);
+        if(result==1){
+            System.out.println("수정성공");
         }else{
-            System.out.println(mem.getId()+"은(는) 사용 불가능한 ID 입니다.");
-            msg = "fail";
+            System.out.println("수정실패");
         }
-        return msg;
+        return result;
     }
     @Override
-    public String show() {
-        // TODO 2.보기
-        return session.toString();
-    }
-    @Override
-    public void update(MemberBean mem) {
-        // TODO 3.수정
-        int result = dao.update(mem);
-        if (result == 1) {
-            System.out.println("서비스 수정결과 성공");
-        }else{
-            System.out.println("서비스 수정결과 실패");
-        }
-    }
-    @Override
-    public String delete(MemberBean member) {
-        // TODO 4.삭제
-        String result = "";
-        if (dao.delete(member) == 1) {
-            result = "삭제성공";
-        } else {
-            result = "삭제실패";
-        }
-        return  result;
+    public int delete(MemberBean mBean) {
+
+        return dao.deleteMember(mBean);
     }
     @Override
     public int count() {
-        // TODO Auto-generated method stub
-        return dao.count();
+        return map.values().size();
     }
     @Override
-    public MemberBean findById(String findID) {
-        return dao.findById(findID);
+    public MemberBean findById(String id) {
+        return dao.findByPK(id);
     }
     @Override
-    public List<?> list() {
+    public List<MemberBean> findBy(String word) {
+        List<MemberBean> findList = new ArrayList<MemberBean>();
+        Set<?> keys = map.keySet();
+        Iterator<?> it = keys.iterator();
+        while(it.hasNext()){
+            MemberBean tempBean = (MemberBean) map.get(it.next());
+            if(tempBean.getName().equals(word)){
+                findList.add(tempBean);
+            }
+        }
+        return findList;
+    }
 
+    @Override
+    public ArrayList<MemberBean> list() {
         return dao.list();
     }
-    @Override
-    public List<?> findBy(String keyword) {
-        return dao.findByName(keyword);
-    }
-    @Override
+
     public MemberBean getSession() {
         return session;
     }
-    @Override
-    public void logout(MemberBean member) {
-        if (member.getId().equals(session.getId())&&member.getPw().equals(session.getPw())) {
-            session = null;
+    public boolean checkLogin(MemberBean mBean) {
+        boolean loginOk = false;
+        MemberBean m = dao.findByPK(mBean.getId());
+        if(m!=null && m.getPw().equals(mBean.getPw())){
+            loginOk = true;
+        }
+        return loginOk;
+    }
+
+    public void logOut(MemberBean mBean) {
+        if(mBean.getId().equals(session.getId()) && mBean.getPw().equals(session.getPw())){
+            this.session = null;
         }
     }
+
 }
