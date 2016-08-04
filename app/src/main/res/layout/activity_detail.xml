@@ -135,7 +135,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="페이스북 글쓰기"
+        android:text="페이스북 글 쓰기"
         android:textSize="20dp"
         android:id="@+id/bt_facebook"/>
     <Button
